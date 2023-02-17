@@ -4,7 +4,9 @@
         :strips :typing
     )
     (:types
-        course major mandatory elective - objects
+        course major mandatory elective program - objects
+        cisc cogs sode stat math - major 
+        comma ai biocomp cs soft - program
     )
     (:constants )
 
