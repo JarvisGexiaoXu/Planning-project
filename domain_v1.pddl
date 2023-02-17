@@ -9,7 +9,7 @@
     (:constants )
 
     (:predicates
-        (prerequistes ?c1 - course ?c2 - course)
+        (prerequisites ?c1 - course ?c2 - course)
     )
 
     (:action add
