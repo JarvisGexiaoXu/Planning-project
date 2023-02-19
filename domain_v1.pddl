@@ -64,8 +64,7 @@
             (not (current ?t1))
             (current ?t2)
         )
-    )
-    
+    )    
 )
 
 
