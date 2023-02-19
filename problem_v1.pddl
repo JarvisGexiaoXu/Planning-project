@@ -91,7 +91,7 @@
 
     )
 
-    (:goal 
+    (:goal ; Test use only
         (and 
             (taken cisc_101 year_1_fall)
             (taken cisc_204 year_1_winter)
