@@ -13,6 +13,8 @@
     (:predicates
         (prerequisites ?c1 ?c2 - course)
         (double-prerequisites ?c1 ?c2 ?c3 - course)
+        (triple-prerequisites ?c1 ?c2 ?c3 ?c4 - course)
+        (quad-prerequisites ?c1 ?c2 ?c3 ?c4 ?5 - course)
         (taken ?c - course ?t - term)
         (succ ?e1 ?e2 - elective)
         (next ?t1 ?t2 - term)
