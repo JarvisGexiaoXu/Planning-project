@@ -4,10 +4,8 @@
 
     (:objects
         ; numbers
-        n0 n1 n2 n3 n4 n5 n6 n7 n8 n9 n10 - num1
-        n11 n12 - num1;n13 n14 n15 n16 n17 n18 n19 n20 - num1
-        ;n21 n22 n23 n24 n25 n26 n27 n28 n29 n30 - num1
-        ;n31 n32 n33 n34 n35 n36 n37 n38 n39 - num1
+        n1 n2 n3 n4 n5 n6 n7 n8 - num1  ; represent number of semesters
+
         ; courses
         cisc_101  cisc_110 cisc_121 cisc_102 cisc_124 cisc_151 cisc_181 - cisc
         cisc_203 cisc_204 cisc_220 cisc_221 cisc_223 cisc_226 cisc_235 cisc_251 cisc_271 cisc_282 - cisc
@@ -36,9 +34,8 @@
 
     (:init 
 
-        (succ1 n0 n1)    (succ1 n1 n2)    (succ1 n2 n3)    (succ1 n3 n4)
+        (succ1 n1 n2)    (succ1 n2 n3)    (succ1 n3 n4)
         (succ1 n4 n5)    (succ1 n5 n6)    (succ1 n6 n7)    (succ1 n7 n8)
-        (succ1 n8 n9)    (succ1 n9 n10)   (succ1 n10 n11)  (succ1 n11 n12)
         ; (succ1 n12 n13)  (succ1 n13 n14)  (succ1 n14 n15)  (succ1 n15 n16)
         ; (succ1 n16 n17)  (succ1 n17 n18)  (succ1 n18 n19)  (succ1 n19 n20)
         ; (succ1 n20 n21)  (succ1 n21 n22)  (succ1 n22 n23)  (succ1 n23 n24)  
@@ -102,7 +99,13 @@
         ; (quad-prerequisites cisc_226 cisc_322 cisc_324 math_110 cisc_486)   (quad-prerequisites cisc_226 cisc_326 cisc_324 math_110 cisc_486)
         ; (quad-prerequisites cisc_226 cisc_322 cisc_324 math_111 cisc_486)   (quad-prerequisites cisc_226 cisc_326 cisc_324 math_111 cisc_486)
         ; (quad-prerequisites cisc_226 cisc_322 cisc_324 math_112 cisc_486)   (quad-prerequisites cisc_226 cisc_326 cisc_324 math_112 cisc_486)
- 
+
+
+        ;----------------------------------------------ADD MUTUAL EXCLUSIVE RELATIONS BELOW-------------------------------------------------
+
+
+
+
 
 
         ; (succ1 electives_1 electives_2)
@@ -132,17 +135,16 @@
         (next year_5_fall year_5_winter)    (next year_5_winter year_5_summer)  
         
         (current year_1_fall)
-        (credit n0)
-        (course-limits year_1_fall s0)
+
+        (course-counts n1 s0)
 
     )
 
     (:goal ; Test use only
         (and 
-            (taken cisc_101 year_1_fall)
-            (taken cisc_204 year_1_winter)
-            ; (taken cisc_486 year_4_winter)
-            (credit n12)
+            ; (taken cisc_101 year_1_fall)
+            ; (taken cisc_204 year_1_winter)
+            (course-counts n8 s5)
         )
     )
 

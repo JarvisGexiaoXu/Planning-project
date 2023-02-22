@@ -9,9 +9,9 @@
         comma ai biocomp cs soft - program
     )
     (:constants 
-        ;n40 - num1
-        s0 s1 s2 s3 s4 s5 - num2
-
+        ; numbers
+        s0 s1 s2 s3 s4 s5 - num2        ; represent number of courses
+        
     )
 
     (:predicates
@@ -24,22 +24,20 @@
         (succ2 ?s1 ?s2 - num2)
         (next ?t1 ?t2 - term)
         (current ?t - term)
-        (credit ?n - num1)
-        (course-limits ?t - term ?n - num2) 
+        (course-counts ?n1 - num1 ?n2 - num2)
+        (mutual-exclusive ?c1 ?c2 - courses) 
 
     )
 
 
 
     (:action add_course_without_prerequisites
-        :parameters (?c1 - course ?t - term ?n1 ?n2 - num1 ?s1 ?s2 - num2)
+        :parameters (?c1 - course ?t - term ?s1 ?s2 - num2 ?n1 - num1)
         :precondition 
         (and
-            (credit ?n1)
-            (succ1 ?n1 ?n2)
-            (course-limits ?t ?s1)
+            (course-counts ?n1 ?s1)
             (succ2 ?s1 ?s2)
-            (not (course-limits ?t s5))
+            (not (course-counts ?s1 s5))
             (current ?t)
             (forall (?c - course)
                 (not (prerequisites ?c ?c1))
@@ -51,21 +49,17 @@
         :effect 
         (and 
             (taken ?c1 ?t)
-            (not (credit ?n1))
-            (credit ?n2)
-            (not (course-limits ?t ?s1))
-            (course-limits ?t ?s2)
+            (not (course-counts ?n1 ?s1))
+            (course-counts ?n1 ?s2)
         )
     )
     (:action add_course_with_prerequisites
-        :parameters (?c1 ?c2 - course ?t - term ?n1 ?n2 - num1 ?s1 ?s2 - num2)
+        :parameters (?c1 ?c2 - course ?t - term ?s1 ?s2 - num2 ?n1 - num1)
         :precondition 
         (and 
-            (credit ?n1)
-            (succ1 ?n1 ?n2)
-            (course-limits ?t ?s1)
+            (course-counts ?n1 ?s1)
             (succ2 ?s1 ?s2)
-            (not (course-limits ?t s5))
+            (not (course-counts ?n1 s5))
             (current ?t)
             (prerequisites ?c1 ?c2)
             (not (taken ?c1 ?t))
@@ -78,10 +72,8 @@
         )       
         :effect (and
             (taken ?c2 ?t)
-            (not (credit ?n1))
-            (credit ?n2)
-            (not (course-limits ?t ?s1))
-            (course-limits ?t ?s2)
+            (not (course-counts ?n1 ?s1))
+            (course-counts ?n1 ?s2)
         )
     )
     ; (:action add_course_with_double_prerequisites
@@ -154,22 +146,23 @@
     ;     )
     ; )
     (:action next_term
-        :parameters (?t1 ?t2 - term)
+        :parameters (?t1 ?t2 - term ?n1 ?n2 - num1 ?s - num2)
         :precondition 
         (and 
             (current ?t1)
             (or
-                (course-limits ?t1 s5)
-                (course-limits ?t1 s4)
-                (course-limits ?t1 s3)
+                (course-counts ?n1 s5)
+                (course-counts ?n1 s4)
+                (course-counts ?n1 s3)
             )
             (next ?t1 ?t2)
+            (succ1 ?n1 ?n2)
         )
         :effect 
         (and 
             (not (current ?t1))
             (current ?t2)
-            (course-limits ?t2 s0)
+            (course-counts ?n2 s0)
         )
     )    
 )
