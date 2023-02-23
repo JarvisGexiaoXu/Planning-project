@@ -7,6 +7,8 @@
         course elective program term num1 num2 - objects
         cisc cogs sode stat math elec cmpe psyc - course 
         comma ai biocomp cs soft - program
+        cisc_200_level cisc_300_level cisc_400_level cisc_400_level_year cisc_year - cisc
+        cogs_200_level - cogs
     )
     (:constants 
         ; numbers

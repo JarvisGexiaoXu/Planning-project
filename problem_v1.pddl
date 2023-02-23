@@ -7,13 +7,19 @@
         n1 n2 n3 n4 n5 n6 n7 n8 - num1  ; represent number of semesters
 
         ; courses
-        cisc_101 cisc_110 cisc_121 cisc_102 cisc_124 cisc_151 cisc_181 - cisc
-        cisc_203 cisc_204 cisc_220 cisc_221 cisc_223 cisc_226 cisc_235 cisc_251 cisc_271 cisc_282 - cisc
+        cisc_101 cisc_110 cisc_121 cisc_102 cisc_124 cisc_151 cisc_181 cisc_251 - cisc
+        cisc_203 cisc_204 cisc_220 cisc_221 cisc_223 cisc_226 cisc_235 cisc_271 cisc_282 - cisc_200_level
         cisc_320 cisc_322 cisc_324 cisc_325 cisc_326 cisc_327 cisc_330 cisc_332 cisc_335 cisc_340 cisc_351 cisc_352 cisc_360 cisc_365 cisc_371 cisc_372 - cisc
-        cisc_422 cisc_423 cisc_425 cisc_426 cisc_432 cisc_434 cisc_437 cisc_447 cisc_448 cisc_451 cisc_452 cisc_453 cisc_454 cisc_455 cisc_457 cisc_458 cisc_462 cisc_465 cisc_466 cisc_467 cisc_468 cisc_471 cisc_472 cisc_473 cisc_474 cisc_486 cisc_490 cisc_491 cisc_492 cisc_496 cisc_497 cisc_498 cisc_499 cisc_500 - cisc
-        cogs_201 cogs_100 cogs_300 cogs_400 cogs_499 - cogs
+        cisc_422 cisc_423 cisc_425 cisc_426 cisc_432 cisc_434 cisc_437 cisc_447 cisc_448 cisc_451 cisc_452 cisc_453 cisc_454 cisc_455 cisc_457 cisc_458 cisc_462 cisc_465 cisc_466 cisc_468 cisc_471 cisc_472 cisc_473 cisc_474 cisc_486 cisc_490 cisc_491 cisc_492 cisc_496 - cisc
+        cogs_100 cogs_300 cogs_400 cogs_499 - cogs
         stat_263 stat_any - stat
         math_110 math_111 math_112 math_120 math_121 math_126 - math
+        cisc_467 cisc_497 cisc_499 - cisc_400_level
+        cisc_454 - cisc_300_level
+        cogs_201 - cogs_200_level
+        cisc_498 - cisc_400_level_year
+        cisc_500 - cisc_year
+        
         ; elec_278 - elec
         ; cmpe_327 - cmpe
         ; psyc_100 psyc_202 psyc_221 - psyc
@@ -102,11 +108,33 @@
 
 
         ;----------------------------------------------ADD MUTUAL EXCLUSIVE RELATIONS BELOW-------------------------------------------------
-
-
-
-
-
+        (mutual-exclusive cisc_101 cisc_110) (mutual-exclusive cisc_101 cisc_151) 
+        (mutual-exclusive cisc_111 cisc_101) (mutual-exclusive cisc_110 cisc_151) 
+        (mutual-exclusive cisc_151 cisc_101) (mutual-exclusive cisc_151 cisc_110)
+        ;(mutual-exclusive cisc_320 cisc_322) (mutual-exclusive cisc_322 cisc_320)  
+        (mutual-exclusive cisc_322 cisc_326) (mutual-exclusive cisc_326 cisc_322) 
+        (mutual-exclusive cisc_351 cisc_371) (mutual-exclusive cisc_351 cisc_372) 
+        (mutual-exclusive cisc_371 cisc_351) (mutual-exclusive cisc_371 cisc_372) 
+        (mutual-exclusive cisc_372 cisc_351) (mutual-exclusive cisc_372 cisc_371) 
+        (mutual-exclusive cisc_452 cogs_400) (mutual-exclusive cogs_400 cisc_452)
+        (mutual-exclusive cisc_474 cisc_490) (mutual-exclusive cisc_490 cisc_474)
+        (mutual-exclusive cisc_474 cisc_490) (mutual-exclusive cisc_490 cisc_474)
+        (mutual-exclusive cisc_496 cisc_498) (mutual-exclusive cisc_496 cisc_499) 
+        (mutual-exclusive cisc_496 cisc_500) (mutual-exclusive cisc_496 cogs_499)
+        (mutual-exclusive cisc_498 cisc_496) (mutual-exclusive cisc_498 cisc_499) 
+        (mutual-exclusive cisc_498 cisc_500) (mutual-exclusive cisc_498 cogs_499)
+        (mutual-exclusive cisc_499 cisc_498) (mutual-exclusive cisc_499 cisc_496) 
+        (mutual-exclusive cisc_499 cisc_500) (mutual-exclusive cisc_499 cogs_499)
+        (mutual-exclusive cisc_500 cisc_498) (mutual-exclusive cisc_500 cisc_496) 
+        (mutual-exclusive cisc_500 cisc_499) (mutual-exclusive cisc_500 cogs_499)
+        (mutual-exclusive cogs_499 cisc_498) (mutual-exclusive cogs_499 cisc_496) 
+        (mutual-exclusive cogs_499 cisc_499) (mutual-exclusive cogs_499 cisc_500)
+        (mutual-exclusive math_110 math_111) (mutual-exclusive math_110 math_112)
+        (mutual-exclusive math_111 math_110) (mutual-exclusive math_111 math_112)
+        (mutual-exclusive math_112 math_110) (mutual-exclusive math_112 math_111)
+        (mutual-exclusive math_120 math_121) (mutual-exclusive math_120 math_126)
+        (mutual-exclusive math_121 math_126) (mutual-exclusive math_121 math_120)
+        (mutual-exclusive math_126 math_121) (mutual-exclusive math_126 math_120)
 
         ; (succ1 electives_1 electives_2)
         ; (succ1 electives_2 electives_3)
