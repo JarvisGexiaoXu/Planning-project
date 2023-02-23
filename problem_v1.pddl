@@ -111,7 +111,8 @@
         (mutual-exclusive cisc_101 cisc_110) (mutual-exclusive cisc_101 cisc_151) 
         (mutual-exclusive cisc_111 cisc_101) (mutual-exclusive cisc_110 cisc_151) 
         (mutual-exclusive cisc_151 cisc_101) (mutual-exclusive cisc_151 cisc_110)
-        ;(mutual-exclusive cisc_320 cisc_322) (mutual-exclusive cisc_322 cisc_320)  
+        (mutual-exclusive cisc_320 cisc_322) (mutual-exclusive cisc_322 cisc_320)  
+        (mutual-exclusive cisc_320 cisc_326) (mutual-exclusive cisc_326 cisc_320) 
         (mutual-exclusive cisc_322 cisc_326) (mutual-exclusive cisc_326 cisc_322) 
         (mutual-exclusive cisc_351 cisc_371) (mutual-exclusive cisc_351 cisc_372) 
         (mutual-exclusive cisc_371 cisc_351) (mutual-exclusive cisc_371 cisc_372) 
@@ -135,6 +136,7 @@
         (mutual-exclusive math_120 math_121) (mutual-exclusive math_120 math_126)
         (mutual-exclusive math_121 math_126) (mutual-exclusive math_121 math_120)
         (mutual-exclusive math_126 math_121) (mutual-exclusive math_126 math_120)
+        
 
         ; (succ1 electives_1 electives_2)
         ; (succ1 electives_2 electives_3)
