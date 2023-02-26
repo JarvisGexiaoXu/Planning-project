@@ -39,7 +39,7 @@
         (and
             (course-counts ?n1 ?s1)
             (succ2 ?s1 ?s2)
-            (not (course-counts ?s1 s5))
+            (not (course-counts ?n1 s5))
             (current ?t)
             (forall (?c - course)
                 (not (prerequisites ?c ?c1))
@@ -168,7 +168,6 @@
         )
     )    
 )
-
 
 
 

@@ -11,14 +11,12 @@
         cisc_203 cisc_204 cisc_220 cisc_221 cisc_223 cisc_226 cisc_235 cisc_271 cisc_282 - cisc_200_level
         cisc_320 cisc_322 cisc_324 cisc_325 cisc_326 cisc_327 cisc_330 cisc_332 cisc_335 cisc_340 cisc_351 cisc_352 cisc_360 cisc_365 cisc_371 cisc_372 - cisc
         cisc_422 cisc_423 cisc_425 cisc_426 cisc_432 cisc_434 cisc_437 cisc_447 cisc_448 cisc_451 cisc_452 cisc_453 cisc_454 cisc_455 cisc_457 cisc_458 cisc_462 cisc_465 cisc_466 cisc_468 cisc_471 cisc_472 cisc_473 cisc_474 cisc_486 cisc_490 cisc_491 cisc_492 cisc_496 - cisc
-        cogs_100 cogs_300 cogs_400 cogs_499 - cogs
+        cisc_500 - cisc
+        cogs_100 cogs_201 cogs_300 cogs_400 cogs_499 - cogs
         stat_263 stat_any - stat
         math_110 math_111 math_112 math_120 math_121 math_126 - math
-        cisc_467 cisc_497 cisc_499 - cisc_400_level
-        cisc_454 - cisc_300_level
-        cogs_201 - cogs_200_level
-        cisc_498 - cisc_400_level_year
-        cisc_500 - cisc_year
+        cisc_467 cisc_497 cisc_498 cisc_499 - cisc
+
         
         ; elec_278 - elec
         ; cmpe_327 - cmpe
@@ -109,7 +107,7 @@
 
         ;----------------------------------------------ADD MUTUAL EXCLUSIVE RELATIONS BELOW-------------------------------------------------
         (mutual-exclusive cisc_101 cisc_110) (mutual-exclusive cisc_101 cisc_151) 
-        (mutual-exclusive cisc_111 cisc_101) (mutual-exclusive cisc_110 cisc_151) 
+        (mutual-exclusive cisc_110 cisc_101) (mutual-exclusive cisc_110 cisc_151) 
         (mutual-exclusive cisc_151 cisc_101) (mutual-exclusive cisc_151 cisc_110)
         (mutual-exclusive cisc_320 cisc_322) (mutual-exclusive cisc_322 cisc_320)  
         (mutual-exclusive cisc_320 cisc_326) (mutual-exclusive cisc_326 cisc_320) 
@@ -121,7 +119,6 @@
         (mutual-exclusive cisc_474 cisc_490) (mutual-exclusive cisc_490 cisc_474)
         (mutual-exclusive cisc_474 cisc_490) (mutual-exclusive cisc_490 cisc_474)
         (mutual-exclusive cisc_496 cisc_498) (mutual-exclusive cisc_496 cisc_499) 
-        (mutual-exclusive cisc_496 cisc_500) (mutual-exclusive cisc_496 cogs_499)
         (mutual-exclusive cisc_498 cisc_496) (mutual-exclusive cisc_498 cisc_499) 
         (mutual-exclusive cisc_498 cisc_500) (mutual-exclusive cisc_498 cogs_499)
         (mutual-exclusive cisc_499 cisc_498) (mutual-exclusive cisc_499 cisc_496) 
@@ -172,9 +169,9 @@
 
     (:goal ; Test use only
         (and 
-            ; (taken cisc_101 year_1_fall)
-            ; (taken cisc_204 year_1_winter)
-            (course-counts n8 s5)
+            (taken cisc_124 year_1_winter)
+            (taken cisc_282 year_1_summer)
+            (course-counts n2 s5)
         )
     )
 
