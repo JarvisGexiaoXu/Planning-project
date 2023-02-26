@@ -4,15 +4,12 @@
         :strips :typing :negative-preconditions :disjunctive-preconditions
     )
     (:types
-        course elective program term num1 num2 - objects
-        cisc cogs sode stat math elec cmpe psyc - course 
-        comma ai biocomp cs soft - program
-        cisc_200_level cisc_300_level cisc_400_level cisc_400_level_year cisc_year - cisc
-        cogs_200_level - cogs
+        course program term num1 num2 - objects
+        cisc cogs stat math  - course 
     )
     (:constants 
-        ; numbers
-        s0 s1 s2 s3 s4 s5 - num2        ; represent number of courses
+        ; numbers：represent number of courses
+        s0 s1 s2 s3 s4 s5 - num2        
         
     )
 
@@ -21,155 +18,87 @@
         ; (double-prerequisites ?c1 ?c2 ?c3 - course)
         ; (triple-prerequisites ?c1 ?c2 ?c3 ?c4 - course)
         ; (quad-prerequisites ?c1 ?c2 ?c3 ?c4 ?c5 - course)
-        (taken ?c - course ?t - term)
+        (taken ?c - course ?n - num1)
         (succ1 ?n1 ?n2 - num1)
         (succ2 ?s1 ?s2 - num2)
         (next ?t1 ?t2 - term)
-        (current ?t - term)
-        (course-counts ?n1 - num1 ?n2 - num2)
+        (current ?n - num1)
+        (current-term ?t - term)
+        (course-counts ?n - num1 ?s - num2)
         (mutual-exclusive ?c1 ?c2 - courses) 
 
     )
-
-
-
-    (:action add_course_without_prerequisites
-        :parameters (?c1 - course ?t - term ?s1 ?s2 - num2 ?n1 - num1)
+    
+    (:action add_course_without_prerequisites ; v1 complete
+        :parameters 
+        (
+            ?c - course
+            ?t - term
+            ?n - num1
+            ?s1 ?s2 - num2
+        )
         :precondition 
         (and
-            (course-counts ?n1 ?s1)
+            (current-term ?t)
+            (current ?n)
             (succ2 ?s1 ?s2)
-            (not (course-counts ?n1 s5))
-            (current ?t)
-            (forall (?c - course)
-                (not (prerequisites ?c ?c1))
-            )
-            (forall (?t1 - term)
-                (not (taken ?c1 ?t1))
-            )   
+            (course-counts ?n ?s1)
+
+            (not (exists (?nx - num1) (taken ?c ?nx))) ; the added course has not been taken in any terms
+            (not (exists (?cx - course) (prerequisites ?cx ?c))) ; the course does not reuqire any prerequisites
         )
         :effect 
         (and 
-            (taken ?c1 ?t)
-            (not (course-counts ?n1 ?s1))
-            (course-counts ?n1 ?s2)
+            (taken ?c ?n)
+            (not (course-counts ?n ?s1))
+            (course-counts ?n ?s2)
         )
     )
+
     (:action add_course_with_prerequisites
-        :parameters (?c1 ?c2 - course ?t - term ?s1 ?s2 - num2 ?n1 - num1)
+        :parameters (?c1 ?c2 - course ?t - term ?s1 ?s2 - num2 ?n - num1)
         :precondition 
         (and 
-            (course-counts ?n1 ?s1)
+            (current-term ?t)
+            (current ?n)
             (succ2 ?s1 ?s2)
-            (not (course-counts ?n1 s5))
-            (current ?t)
+            (course-counts ?n ?s1)
+
             (prerequisites ?c1 ?c2)
-            (not (taken ?c1 ?t))
-            (exists (?t1 - term)
-                (taken ?c1 ?t1)
-            )
-            (forall (?t1 - term) 
-                (not (taken ?c2 ?t1))
-            ) 
+            (not (exists (?nx - num1) (taken ?c2 ?nx))) ; the added course has not been taken in any terms
+            (exists (?nx - num1) (taken ?c1 ?nx)) ; the prerequisites has been taken at some term (nextline eliminates the current term)
+            (not (taken ?c1 ?n)) ; can not take the course and its prerequisites in the same term
+ 
         )       
         :effect (and
-            (taken ?c2 ?t)
-            (not (course-counts ?n1 ?s1))
-            (course-counts ?n1 ?s2)
+            (taken ?c2 ?n)
+            (not (course-counts ?n ?s1))
+            (course-counts ?n ?s2)
+
         )
     )
-    ; (:action add_course_with_double_prerequisites
-    ;     :parameters (?c1 ?c2 ?c3 - course ?t - term)
-    ;     :precondition 
-    ;     (and 
-    ;         (current ?t)
-    ;         (double-prerequisites ?c1 ?c2 ?c3)
-    ;         (exists (?t1 - term)
-    ;             (taken ?c1 ?t1)
-    ;         )
-    ;         (exists (?t1 - term)
-    ;             (taken ?c2 ?t1)
-    ;         )
-    ;         (forall (?t1 - term) 
-    ;             (not (taken ?c3 ?t1))
-    ;         ) 
-    ;     )       
-    ;     :effect (and
-    ;         (taken ?c3 ?t)
-    ;     )
-    ; )
-    ; (:action add_course_with_triple_prerequisites
-    ;     :parameters (?c1 ?c2 ?c3 ?c4 - course ?t - term)
-    ;     :precondition 
-    ;     (and 
-    ;         (current ?t)
-    ;         (triple-prerequisites ?c1 ?c2 ?c3 ?c4)
-    ;         (exists (?t1 - term)
-    ;             (taken ?c1 ?t1)
-    ;         )
-    ;         (exists (?t1 - term)
-    ;             (taken ?c2 ?t1)
-    ;         )
-    ;         (exists (?t1 - term)
-    ;             (taken ?c3 ?t1)
-    ;         )
-    ;         (forall (?t1 - term) 
-    ;             (not (taken ?c4 ?t1))
-    ;         ) 
-    ;     )       
-    ;     :effect (and
-    ;         (taken ?c4 ?t)
-    ;     )
-    ; )
-    ; (:action add_course_with_quad_prerequisites
-    ;     :parameters (?c1 ?c2 ?c3 ?c4 ?c5 - course ?t - term)
-    ;     :precondition 
-    ;     (and 
-    ;         (current ?t)
-    ;         (quad-prerequisites ?c1 ?c2 ?c3 ?c4 ?c5)
-    ;         (exists (?t1 - term)
-    ;             (taken ?c1 ?t1)
-    ;         )
-    ;         (exists (?t1 - term)
-    ;             (taken ?c2 ?t1)
-    ;         )
-    ;         (exists (?t1 - term)
-    ;             (taken ?c3 ?t1)
-    ;         )
-    ;         (exists (?t1 - term)
-    ;             (taken ?c4 ?t1)
-    ;         )
-    ;         (forall (?t1 - term) 
-    ;             (not (taken ?c5 ?t1))
-    ;         ) 
-    ;     )       
-    ;     :effect (and
-    ;         (taken ?c5 ?t)
-    ;     )
-    ; )
-    (:action next_term
+  
+    (:action next_term ; v1 complete
         :parameters (?t1 ?t2 - term ?n1 ?n2 - num1 ?s - num2)
         :precondition 
         (and 
-            (current ?t1)
+            (course-counts ?n1 ?s)
             (or
                 (course-counts ?n1 s5)
-                (course-counts ?n1 s4)
-                (course-counts ?n1 s3)
             )
-            (next ?t1 ?t2)
+            (current ?n1)
+            (current-term ?t1)
             (succ1 ?n1 ?n2)
+            (next ?t1 ?t2)
         )
         :effect 
         (and 
-            (not (current ?t1))
-            (current ?t2)
+            ; (not (course-counts ?n1 ?s))
             (course-counts ?n2 s0)
+            (not (current ?n1))
+            (current ?n2)
+            (not (current-term ?t1))
+            (current-term ?t2)
         )
     )    
 )
-
-
-
-
-
