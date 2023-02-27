@@ -82,11 +82,8 @@
 
     (:goal ; Test use only
         (and 
-            ; (taken math_120 n1)
-            ; (taken math_111 n3)
-            (taken cisc_124 n3)
-            (taken cisc_282 n5)
-
+            (course-counts n3 s5)
+            (taken cisc_282)
         )
     )
 

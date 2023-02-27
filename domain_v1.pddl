@@ -1,7 +1,7 @@
 (define (domain v1_d)
 
     (:requirements
-        :strips :typing :negative-preconditions :disjunctive-preconditions
+        :strips :typing :negative-preconditions :disjunctive-preconditions :conditional-effects
     )
     (:types
         course program term num1 num2 - objects
@@ -10,7 +10,6 @@
     (:constants 
         ; numbers：represent number of courses
         s0 s1 s2 s3 s4 s5 - num2        
-        
     )
 
     (:predicates
@@ -18,7 +17,8 @@
         ; (double-prerequisites ?c1 ?c2 ?c3 - course)
         ; (triple-prerequisites ?c1 ?c2 ?c3 ?c4 - course)
         ; (quad-prerequisites ?c1 ?c2 ?c3 ?c4 ?c5 - course)
-        (taken ?c - course ?n - num1)
+        (taken ?c - course)
+        (taking ?c - course)
         (succ1 ?n1 ?n2 - num1)
         (succ2 ?s1 ?s2 - num2)
         (next ?t1 ?t2 - term)
@@ -44,12 +44,13 @@
             (succ2 ?s1 ?s2)
             (course-counts ?n ?s1)
 
-            (not (exists (?nx - num1) (taken ?c ?nx))) ; the added course has not been taken in any terms
+            (not (taken ?c)) ; the added course has not been taken in any terms
+            (not (taking ?c)) ; the added course has not been taking in the current term
             (not (exists (?cx - course) (prerequisites ?cx ?c))) ; the course does not reuqire any prerequisites
         )
         :effect 
         (and 
-            (taken ?c ?n)
+            (taking ?c)
             (not (course-counts ?n ?s1))
             (course-counts ?n ?s2)
         )
@@ -65,20 +66,21 @@
             (course-counts ?n ?s1)
 
             (prerequisites ?c1 ?c2)
-            (not (exists (?nx - num1) (taken ?c2 ?nx))) ; the added course has not been taken in any terms
-            (exists (?nx - num1) (taken ?c1 ?nx)) ; the prerequisites has been taken at some term (nextline eliminates the current term)
-            (not (taken ?c1 ?n)) ; can not take the course and its prerequisites in the same term
+            (not (taken ?c2)) ; the added course has not been taken in any terms
+            (not (taking ?c2)) ; the added course has not been taking in the current term
+            (taken ?c1) ; the prerequisites has been taken at some term (nextline eliminates the current term)
+            (not (taking ?c1)) ; can not take the course and its prerequisites in the same term
  
         )       
         :effect (and
-            (taken ?c2 ?n)
+            (taking ?c2)
             (not (course-counts ?n ?s1))
             (course-counts ?n ?s2)
 
         )
     )
   
-    (:action next_term ; v1 complete
+    (:action next_term ; term transition
         :parameters (?t1 ?t2 - term ?n1 ?n2 - num1 ?s - num2)
         :precondition 
         (and 
@@ -99,6 +101,16 @@
             (current ?n2)
             (not (current-term ?t1))
             (current-term ?t2)
+
+            (forall (?cx - course) ; mark all the taking course to be taken
+                (when 
+                    (taking ?cx) 
+                    (and
+                        (not (taking ?cx))
+                        (taken ?cx)    
+                    )
+                )
+            )
         )
     )    
 )
