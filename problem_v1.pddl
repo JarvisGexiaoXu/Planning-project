@@ -86,5 +86,11 @@
             (taken cisc_282)
         )
     )
+    (:goal ; AI course plan
+        (and 
+            https://www.cs.queensu.ca/undergraduate/programs/options/artificial-intelligence.php
+        )
+    )
+    
 
 )
