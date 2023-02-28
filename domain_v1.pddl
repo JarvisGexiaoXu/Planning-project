@@ -5,7 +5,7 @@
     )
     (:types
         course program term num1 num2 - objects
-        cisc cogs stat math  - course 
+        cisc cogs stat math elec psyc  - course 
     )
     (:constants 
         ; numbers：represent number of courses
@@ -14,9 +14,9 @@
 
     (:predicates
         (prerequisites ?c1 ?c2 - course)
-        ; (double-prerequisites ?c1 ?c2 ?c3 - course)
-        ; (triple-prerequisites ?c1 ?c2 ?c3 ?c4 - course)
-        ; (quad-prerequisites ?c1 ?c2 ?c3 ?c4 ?c5 - course)
+        (double-prerequisites ?c1 ?c2 ?c3 - course)
+        (triple-prerequisites ?c1 ?c2 ?c3 ?c4 - course)
+        (quad-prerequisites ?c1 ?c2 ?c3 ?c4 ?c5 - course)
         (taken ?c - course)
         (taking ?c - course)
         (succ1 ?n1 ?n2 - num1)
@@ -47,6 +47,10 @@
             (not (taken ?c)) ; the added course has not been taken in any terms
             (not (taking ?c)) ; the added course has not been taking in the current term
             (not (exists (?cx - course) (prerequisites ?cx ?c))) ; the course does not reuqire any prerequisites
+            (not (exists (?cx1 ?cx2 - course) (double-prerequisites ?cx1 ?cx2 ?c)))
+            (not (exists (?cx1 ?cx2 ?cx3 - course) (triple-prerequisites ?cx1 ?cx2 ?cx3 ?c)))
+            (not (exists (?cx1 ?cx2 ?cx3 ?cx4 - course) (quad-prerequisites ?cx1 ?cx2 ?cx3 ?cx4 ?c)))
+            
         )
         :effect 
         (and 
@@ -77,6 +81,81 @@
             (not (course-counts ?n ?s1))
             (course-counts ?n ?s2)
 
+        )
+    )
+
+    (:action add_course_with_double_prerequisites
+        :parameters (?c1 ?c2 ?c3 - course ?t - term ?s1 ?s2 - num2 ?n - num1)
+        :precondition 
+        (and 
+            (current-term ?t)
+            (current ?n)
+            (succ2 ?s1 ?s2)
+            (course-counts ?n ?s1)
+            (double-prerequisites ?c1 ?c2 ?c3)
+            (not (taken ?c3)) ; the added course has not been taken in any terms
+            (not (taking ?c3)) ; the added course has not been taking in the current term
+            (taken ?c1)
+            (taken ?c2) ; the prerequisites has been taken at some term (nextline eliminates the current term)
+            (not (taking ?c1)) ; can not take the course and its prerequisites in the same term
+            (not (taking ?c2))
+        )       
+        :effect (and
+            (taking ?c3)
+            (not (course-counts ?n ?s1))
+            (course-counts ?n ?s2)
+        )
+    )
+
+    (:action add_course_with_triple_prerequisites
+        :parameters (?c1 ?c2 ?c3 ?c4 - course ?t - term ?s1 ?s2 - num2 ?n - num1)
+        :precondition 
+        (and 
+            (current-term ?t)
+            (current ?n)
+            (succ2 ?s1 ?s2)
+            (course-counts ?n ?s1)
+            (triple-prerequisites ?c1 ?c2 ?c3 ?c4)
+            (not (taken ?c4)) ; the added course has not been taken in any terms
+            (not (taking ?c4)) ; the added course has not been taking in the current term
+            (taken ?c1) ; the prerequisites has been taken at some term (nextline eliminates the current term)
+            (taken ?c2)
+            (taken ?c3) 
+            (not (taking ?c1)) ; can not take the course and its prerequisites in the same term
+            (not (taking ?c2))
+            (not (taking ?c3))
+        )       
+        :effect (and
+            (taking ?c4)
+            (not (course-counts ?n ?s1))
+            (course-counts ?n ?s2)
+        )
+    )
+    
+    (:action add_course_with_quad_prerequisites
+        :parameters (?c1 ?c2 ?c3 ?c4 ?c5 - course ?t - term ?s1 ?s2 - num2 ?n - num1)
+        :precondition 
+        (and 
+            (current-term ?t)
+            (current ?n)
+            (succ2 ?s1 ?s2)
+            (course-counts ?n ?s1)
+            (quad-prerequisites ?c1 ?c2 ?c3 ?c4 ?c5)
+            (not (taken ?c5)) ; the added course has not been taken in any terms
+            (not (taking ?c5)) ; the added course has not been taking in the current term
+            (taken ?c1) ; the prerequisites has been taken at some term (nextline eliminates the current term)
+            (taken ?c2)
+            (taken ?c3) 
+            (taken ?c4)
+            (not (taking ?c1)) ; can not take the course and its prerequisites in the same term
+            (not (taking ?c2))
+            (not (taking ?c3))
+            (not (taking ?c4))
+        )       
+        :effect (and
+            (taking ?c5)
+            (not (course-counts ?n ?s1))
+            (course-counts ?n ?s2)
         )
     )
   
@@ -114,3 +193,7 @@
         )
     )    
 )
+
+
+
+

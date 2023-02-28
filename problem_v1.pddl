@@ -1,6 +1,6 @@
-(define (problem v1_p)
+(define (problem v2_p)
 
-    (:domain v1_d)
+    (:domain v2_d)
 
     (:objects
         ; numbers：represent number of terms
@@ -16,10 +16,13 @@
         cisc_466 cisc_468 cisc_471 cisc_472 cisc_473 cisc_474 cisc_486 cisc_490 cisc_491 - cisc
         cisc_492 cisc_496 - cisc
         cisc_500 - cisc
+        cmpe_327 - cisc
         cogs_100 cogs_201 cogs_300 cogs_400 cogs_499 - cogs
         stat_263 stat_any - stat
         math_110 math_111 math_112 math_120 math_121 math_126 - math
         cisc_467 cisc_497 cisc_498 cisc_499 - cisc
+        elec_278 - elec
+        psyc_100 psyc_202 psyc_221 - psyc
 
         ; terms
         year_1_fall year_1_winter year_1_summer - term
@@ -39,6 +42,56 @@
         (prerequisites cisc_121 cisc_124)   (prerequisites cisc_121 cisc_220)   (prerequisites cisc_124 cisc_221)   (prerequisites cisc_124 cisc_226)
         (prerequisites cisc_124 cisc_282)   (prerequisites cisc_235 cisc_320)   (prerequisites cisc_324 cisc_335)   (prerequisites cisc_221 cisc_340)
         (prerequisites cisc_235 cisc_352)   (prerequisites cisc_223 cisc_422)   (prerequisites cisc_325 cisc_425)   (prerequisites cisc_324 cisc_434)
+        (prerequisites cisc_327 cisc_448)   (prerequisites cmpe_327 cisc_448)   (prerequisites cisc_235 cisc_452)   (prerequisites cisc_332 cisc_451) 
+        (prerequisites cisc_351 cisc_451)   (prerequisites cisc_372 cisc_451)   (prerequisites cisc_352 cisc_453)   (prerequisites cisc_223 cisc_462)   
+        (prerequisites cisc_365 cisc_466)   (prerequisites cisc_204 cisc_467)   (prerequisites cisc_330 cisc_472)   (prerequisites cisc_352 cisc_474)
+        (prerequisites cisc_371 cisc_473)   (prerequisites cisc_486 cisc_496)   (prerequisites cisc_352 cisc_497)   (prerequisites cisc_365 cisc_497)
+        (prerequisites cisc_365 cisc_499)   (prerequisites cisc_352 cogs_499)   (prerequisites cisc_365 cogs_499)   (prerequisites cisc_235 cogs_400)
+        (prerequisites elec_278 cogs_400)   (prerequisites cogs_100 cogs_201)   (prerequisites psyc_100 cogs_201)
+
+        (double-prerequisites cisc_121 cisc_102 cisc_203)   (double-prerequisites cisc_121 math_110 cisc_203)   (double-prerequisites cisc_121 cisc_102 cisc_204)
+        (double-prerequisites cisc_121 math_110 cisc_204)   (double-prerequisites cisc_124 cisc_204 cisc_223)   (double-prerequisites cisc_124 cisc_203 cisc_235)   
+        (double-prerequisites cisc_124 cisc_203 cisc_235)   (double-prerequisites cisc_235 cisc_223 cisc_322)   (double-prerequisites cisc_221 cisc_235 cisc_324)
+        (double-prerequisites cisc_124 cisc_235 cisc_325)   (double-prerequisites cisc_223 cisc_235 cisc_326)   (double-prerequisites cisc_220 cisc_124 cisc_327)   
+        (double-prerequisites cisc_121 cisc_271 cisc_330)   (double-prerequisites cisc_102 cisc_124 cisc_332)   (double-prerequisites cisc_124 cisc_204 cisc_360)
+        (double-prerequisites cisc_251 stat_any cisc_351)   (double-prerequisites cisc_271 stat_263 cisc_371)   (double-prerequisites cisc_271 stat_any cisc_371)
+        (double-prerequisites cisc_271 stat_any cisc_372)   (double-prerequisites cisc_223 cisc_235 cisc_423)   (double-prerequisites cisc_327 cisc_324 cisc_426)
+        (double-prerequisites cisc_235 cisc_332 cisc_432)   (double-prerequisites cisc_324 cisc_327 cisc_437)   (double-prerequisites cisc_324 cisc_335 cisc_447)
+        (double-prerequisites cisc_235 math_110 cisc_454)   (double-prerequisites cisc_235 math_111 cisc_454)   (double-prerequisites cisc_235 cisc_335 cisc_468)
+        (double-prerequisites cisc_235 math_112 cisc_454)   (double-prerequisites cisc_365 stat_263 cisc_455)   (double-prerequisites cisc_365 cisc_352 cisc_471)
+        (double-prerequisites cisc_271 cisc_352 cisc_473)   (double-prerequisites cogs_201 psyc_202 cogs_300)   (double-prerequisites cogs_201 stat_any cogs_300)
+        (double-prerequisites psyc_221 psyc_202 cogs_300)   (double-prerequisites psyc_221 stat_any cogs_300)   (double-prerequisites cisc_322 cisc_325 cisc_498)
+        (double-prerequisites cisc_322 cisc_327 cisc_498)   (double-prerequisites cisc_326 cisc_325 cisc_498)   (double-prerequisites cisc_326 cisc_327 cisc_498)
+        
+        (triple-prerequisites cisc_203 cisc_204 cisc_235 cisc_365)  (triple-prerequisites cisc_121 cisc_223 cisc_221 cisc_458) 
+        (triple-prerequisites cisc_204 cisc_360 cisc_223 cisc_465)  (triple-prerequisites cisc_204 cisc_360 cisc_223 cisc_465)
+        (triple-prerequisites math_110 math_120 cisc_124 cisc_457)  (triple-prerequisites math_111 math_120 cisc_124 cisc_457) 
+        (triple-prerequisites math_112 math_120 cisc_124 cisc_457)  (triple-prerequisites math_110 math_121 cisc_124 cisc_457) 
+        (triple-prerequisites math_111 math_121 cisc_124 cisc_457)  (triple-prerequisites math_112 math_121 cisc_124 cisc_457) 
+        (triple-prerequisites math_110 math_126 cisc_124 cisc_457)  (triple-prerequisites math_111 math_126 cisc_124 cisc_457) 
+        (triple-prerequisites math_112 math_126 cisc_124 cisc_457)  (triple-prerequisites cisc_101 math_110 math_120 cisc_271)
+        (triple-prerequisites cisc_110 math_110 math_120 cisc_271)  (triple-prerequisites cisc_151 math_110 math_120 cisc_271)
+        (triple-prerequisites cisc_121 math_110 math_120 cisc_271)  (triple-prerequisites cisc_101 math_111 math_120 cisc_271)
+        (triple-prerequisites cisc_110 math_111 math_120 cisc_271)  (triple-prerequisites cisc_151 math_111 math_120 cisc_271)
+        (triple-prerequisites cisc_121 math_111 math_120 cisc_271)  (triple-prerequisites cisc_101 math_112 math_120 cisc_271)
+        (triple-prerequisites cisc_110 math_112 math_120 cisc_271)  (triple-prerequisites cisc_151 math_112 math_120 cisc_271)
+        (triple-prerequisites cisc_121 math_112 math_120 cisc_271)  (triple-prerequisites cisc_101 math_110 math_121 cisc_271)
+        (triple-prerequisites cisc_110 math_110 math_121 cisc_271)  (triple-prerequisites cisc_151 math_110 math_121 cisc_271)
+        (triple-prerequisites cisc_121 math_110 math_121 cisc_271)  (triple-prerequisites cisc_101 math_111 math_121 cisc_271)
+        (triple-prerequisites cisc_110 math_111 math_121 cisc_271)  (triple-prerequisites cisc_151 math_111 math_121 cisc_271)
+        (triple-prerequisites cisc_121 math_111 math_121 cisc_271)  (triple-prerequisites cisc_101 math_112 math_121 cisc_271)
+        (triple-prerequisites cisc_110 math_112 math_121 cisc_271)  (triple-prerequisites cisc_151 math_112 math_121 cisc_271)
+        (triple-prerequisites cisc_121 math_112 math_121 cisc_271)  (triple-prerequisites cisc_101 math_110 math_126 cisc_271)
+        (triple-prerequisites cisc_110 math_110 math_126 cisc_271)  (triple-prerequisites cisc_151 math_110 math_126 cisc_271)
+        (triple-prerequisites cisc_121 math_110 math_126 cisc_271)  (triple-prerequisites cisc_101 math_111 math_126 cisc_271)
+        (triple-prerequisites cisc_110 math_111 math_126 cisc_271)  (triple-prerequisites cisc_151 math_111 math_126 cisc_271)
+        (triple-prerequisites cisc_121 math_111 math_126 cisc_271)  (triple-prerequisites cisc_101 math_112 math_126 cisc_271)
+        (triple-prerequisites cisc_110 math_112 math_126 cisc_271)  (triple-prerequisites cisc_151 math_112 math_126 cisc_271)
+        (triple-prerequisites cisc_121 math_112 math_126 cisc_271)
+
+        (quad-prerequisites cisc_226 cisc_322 cisc_324 math_110 cisc_486)   (quad-prerequisites cisc_226 cisc_326 cisc_324 math_110 cisc_486)
+        (quad-prerequisites cisc_226 cisc_322 cisc_324 math_111 cisc_486)   (quad-prerequisites cisc_226 cisc_326 cisc_324 math_111 cisc_486)
+        (quad-prerequisites cisc_226 cisc_322 cisc_324 math_112 cisc_486)   (quad-prerequisites cisc_226 cisc_326 cisc_324 math_112 cisc_486)
 
         (mutual-exclusive cisc_101 cisc_110) (mutual-exclusive cisc_101 cisc_151) 
         (mutual-exclusive cisc_110 cisc_101) (mutual-exclusive cisc_110 cisc_151) 
@@ -83,14 +136,10 @@
     (:goal ; Test use only
         (and 
             (course-counts n3 s5)
-            (taken cisc_282)
+            (taken cisc_204)
+            (taken cisc_271)
+            (taken cisc_486)
         )
     )
-    (:goal ; AI course plan
-        (and 
-            https://www.cs.queensu.ca/undergraduate/programs/options/artificial-intelligence.php
-        )
-    )
-    
 
 )
