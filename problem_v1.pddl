@@ -14,13 +14,13 @@
         cisc_422 cisc_423 cisc_425 cisc_426 cisc_432 cisc_434 cisc_437 cisc_447 cisc_448 - cisc
         cisc_451 cisc_452 cisc_453 cisc_454 cisc_455 cisc_457 cisc_458 cisc_462 cisc_465 - cisc
         cisc_466 cisc_468 cisc_471 cisc_472 cisc_473 cisc_474 cisc_486 cisc_490 cisc_491 - cisc
-        cisc_492 cisc_496 - cisc
+        cisc_492 cisc_467 - cisc
         cisc_500 - cisc
         cmpe_327 - cisc
         cogs_100 cogs_201 cogs_300 cogs_400 cogs_499 - cogs
         stat_263 stat_any - stat
-        math_110 math_111 math_112 math_120 math_121 math_126 - math
-        cisc_467 cisc_497 cisc_498 cisc_499 - cisc
+        math_110 math_111 math_112 math_120 math_121 math_126 math_123 math_124 - math
+        cisc_497 cisc_496 cisc_498 cisc_499 - cisc
         elec_278 - elec
         psyc_100 psyc_202 psyc_221 - psyc
 
@@ -50,7 +50,7 @@
         (prerequisites elec_278 cogs_400)   (prerequisites cogs_100 cogs_201)   (prerequisites psyc_100 cogs_201)
 
         (double-prerequisites cisc_121 cisc_102 cisc_203)   (double-prerequisites cisc_121 math_110 cisc_203)   (double-prerequisites cisc_121 cisc_102 cisc_204)
-        (double-prerequisites cisc_121 math_110 cisc_204)   (double-prerequisites cisc_124 cisc_204 cisc_223)   (double-prerequisites cisc_124 cisc_203 cisc_235)   
+        (double-prerequisites cisc_121 math_110 cisc_204)   (double-prerequisites cisc_124 cisc_204 cisc_223)     
         (double-prerequisites cisc_124 cisc_203 cisc_235)   (double-prerequisites cisc_235 cisc_223 cisc_322)   (double-prerequisites cisc_221 cisc_235 cisc_324)
         (double-prerequisites cisc_124 cisc_235 cisc_325)   (double-prerequisites cisc_223 cisc_235 cisc_326)   (double-prerequisites cisc_220 cisc_124 cisc_327)   
         (double-prerequisites cisc_121 cisc_271 cisc_330)   (double-prerequisites cisc_102 cisc_124 cisc_332)   (double-prerequisites cisc_124 cisc_204 cisc_360)
@@ -64,7 +64,7 @@
         (double-prerequisites cisc_322 cisc_327 cisc_498)   (double-prerequisites cisc_326 cisc_325 cisc_498)   (double-prerequisites cisc_326 cisc_327 cisc_498)
         
         (triple-prerequisites cisc_203 cisc_204 cisc_235 cisc_365)  (triple-prerequisites cisc_121 cisc_223 cisc_221 cisc_458) 
-        (triple-prerequisites cisc_204 cisc_360 cisc_223 cisc_465)  (triple-prerequisites cisc_204 cisc_360 cisc_223 cisc_465)
+        (triple-prerequisites cisc_204 cisc_360 cisc_223 cisc_465)  
         (triple-prerequisites math_110 math_120 cisc_124 cisc_457)  (triple-prerequisites math_111 math_120 cisc_124 cisc_457) 
         (triple-prerequisites math_112 math_120 cisc_124 cisc_457)  (triple-prerequisites math_110 math_121 cisc_124 cisc_457) 
         (triple-prerequisites math_111 math_121 cisc_124 cisc_457)  (triple-prerequisites math_112 math_121 cisc_124 cisc_457) 
@@ -104,7 +104,6 @@
         (mutual-exclusive cisc_372 cisc_351) (mutual-exclusive cisc_372 cisc_371) 
         (mutual-exclusive cisc_452 cogs_400) (mutual-exclusive cogs_400 cisc_452)
         (mutual-exclusive cisc_474 cisc_490) (mutual-exclusive cisc_490 cisc_474)
-        (mutual-exclusive cisc_474 cisc_490) (mutual-exclusive cisc_490 cisc_474)
         (mutual-exclusive cisc_496 cisc_498) (mutual-exclusive cisc_496 cisc_499) 
         (mutual-exclusive cisc_498 cisc_496) (mutual-exclusive cisc_498 cisc_499) 
         (mutual-exclusive cisc_498 cisc_500) (mutual-exclusive cisc_498 cogs_499)
@@ -131,15 +130,35 @@
         (current n1)
         (course-counts n1 s0)
 
+
+        ; AI stream course requirements
+        (AI-core-A cisc_121 cisc_124)
+        (AI-core-B stat_263 stat_any)
+        (AI-core-C cisc_203 cisc_204 cisc_221 cisc_223 cisc_235)
+        (AI-core-D cisc_322 cisc_326)
+        (AI-core-E cisc_324 cisc_360 cisc_365)
+        (AI-core-F cisc_497)
+        (AI-core-G cisc_496 cisc_499 cisc_500)
+        (AI-option-A cogs_100 cogs_201 cisc_352)
+        (AI-option-B cisc_452 cisc_453 cisc_455 cisc_467 cisc_473 cisc_474)
+        (AI-supporting-A cisc_102 math_111 math_112 math_110)
+        (AI-supporting-B math_120 math_121 math_123 math_124)
+
     )
 
-    (:goal ; Test use only
+    ; (:goal ; Test use only
+    ;     (and 
+    ;         (course-counts n3 s5)
+    ;         (taken cisc_204)
+    ;         (taken cisc_271)
+    ;         (taken cisc_486)
+    ;     )
+    ; )
+
+    (:goal ; AI major plan
         (and 
-            (course-counts n3 s5)
-            (taken cisc_204)
-            (taken cisc_271)
-            (taken cisc_486)
+            (complete-AI-stream)
+            (course-counts n8 s5)
         )
     )
-
 )
