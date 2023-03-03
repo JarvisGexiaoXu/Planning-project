@@ -1,5 +1,13 @@
 # Planning-project
 
+## Project Draft Report
+By March 3rd, we have completed the fundamental cp model (version 1). The created model is capable of generating reasonable plans for the AI stream. <br />
+Under 'Issues' of this repository, we have a list of closed issues; it describes the fundamental features and constraints of the created model, and represents the challenges we have faced so far in building it. <br />
+We are going to start working on the FOND model (version 2). It is expected to be done by March 12th. <br />
+After that, if time permits, we will add time notions to the model (version 3). <br />
+At this point, we feel confident to submit a completed project before the deadline. <br />
+
+
 ## Example output for version 1:
 add_course_without_prerequisites cisc_101 year_1_fall n1 s0 s1 (1) <br />
 add_course_without_prerequisites cisc_102 year_1_fall n1 s1 s2 (1) <br />
