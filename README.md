@@ -9,6 +9,7 @@ At this moment, we feel confident to submit a completed project before the deadl
 
 
 ## Example output for version 1:
+'''
 add_course_without_prerequisites cisc_101 year_1_fall n1 s0 s1 (1) <br />
 add_course_without_prerequisites cisc_102 year_1_fall n1 s1 s2 (1) <br />
 add_course_without_prerequisites cisc_110 year_1_fall n1 s2 s3 (1) <br />
@@ -62,3 +63,4 @@ check_ai_option_b_first cisc_474 (1) <br />
 check_ai_option cogs_100 cogs_201 cisc_352 cisc_474 cisc_467 (1) <br />
 check_ai_supporting cisc_102 math_111 math_112 math_110 math_120 math_121 math_123 math_124 (1) <br />
 check_ai_complete  (1) <br />
+'''
