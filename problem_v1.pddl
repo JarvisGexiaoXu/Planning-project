@@ -1,28 +1,27 @@
-(define (problem v2_p)
+(define (problem v1_p)
 
-    (:domain v2_d)
+    (:domain v1_d)
 
     (:objects
-        ; numbers：represent number of terms
-        n1 n2 n3 n4 n5 n6 n7 n8 - num1 
-
         ; courses
         cisc_101 cisc_110 cisc_121 cisc_102 cisc_124 cisc_151 cisc_181 cisc_251 - cisc
         cisc_203 cisc_204 cisc_220 cisc_221 cisc_223 cisc_226 cisc_235 cisc_271 cisc_282 - cisc
         cisc_320 cisc_322 cisc_324 cisc_325 cisc_326 cisc_327 cisc_330 cisc_332 cisc_335 - cisc
         cisc_340 cisc_351 cisc_352 cisc_360 cisc_365 cisc_371 cisc_372 - cisc
         cisc_422 cisc_423 cisc_425 cisc_426 cisc_432 cisc_434 cisc_437 cisc_447 cisc_448 - cisc
-        cisc_451 cisc_452 cisc_453 cisc_454 cisc_455 cisc_457 cisc_458 cisc_462 cisc_465 - cisc
-        cisc_466 cisc_468 cisc_471 cisc_472 cisc_473 cisc_474 cisc_486 cisc_490 cisc_491 - cisc
-        cisc_492 cisc_467 - cisc
+        cisc_451 cisc_454 cisc_457 cisc_458 cisc_462 cisc_465 - cisc
+        cisc_466 cisc_468 cisc_471 cisc_472 cisc_486 cisc_490 cisc_491 - cisc
+        cisc_492 - cisc
         cisc_500 - cisc
-        cmpe_327 - cisc
+        cmpe_327 - cisc   
+        cisc_452 cisc_453 cisc_455 cisc_467 cisc_473 cisc_474 - cisc
         cogs_100 cogs_201 cogs_300 cogs_400 cogs_499 - cogs
         stat_263 stat_any - stat
         math_110 math_111 math_112 math_120 math_121 math_126 math_123 math_124 - math
         cisc_497 cisc_496 cisc_498 cisc_499 - cisc
         elec_278 - elec
         psyc_100 psyc_202 psyc_221 - psyc
+     
 
         ; terms
         year_1_fall year_1_winter year_1_summer - term
@@ -93,32 +92,37 @@
         (quad-prerequisites cisc_226 cisc_322 cisc_324 math_111 cisc_486)   (quad-prerequisites cisc_226 cisc_326 cisc_324 math_111 cisc_486)
         (quad-prerequisites cisc_226 cisc_322 cisc_324 math_112 cisc_486)   (quad-prerequisites cisc_226 cisc_326 cisc_324 math_112 cisc_486)
 
-        (mutual-exclusive cisc_101 cisc_110) (mutual-exclusive cisc_101 cisc_151) 
-        (mutual-exclusive cisc_110 cisc_101) (mutual-exclusive cisc_110 cisc_151) 
-        (mutual-exclusive cisc_151 cisc_101) (mutual-exclusive cisc_151 cisc_110)
-        (mutual-exclusive cisc_320 cisc_322) (mutual-exclusive cisc_322 cisc_320)  
-        (mutual-exclusive cisc_320 cisc_326) (mutual-exclusive cisc_326 cisc_320) 
-        (mutual-exclusive cisc_322 cisc_326) (mutual-exclusive cisc_326 cisc_322) 
-        (mutual-exclusive cisc_351 cisc_371) (mutual-exclusive cisc_351 cisc_372) 
-        (mutual-exclusive cisc_371 cisc_351) (mutual-exclusive cisc_371 cisc_372) 
-        (mutual-exclusive cisc_372 cisc_351) (mutual-exclusive cisc_372 cisc_371) 
-        (mutual-exclusive cisc_452 cogs_400) (mutual-exclusive cogs_400 cisc_452)
-        (mutual-exclusive cisc_474 cisc_490) (mutual-exclusive cisc_490 cisc_474)
-        (mutual-exclusive cisc_496 cisc_498) (mutual-exclusive cisc_496 cisc_499) 
-        (mutual-exclusive cisc_498 cisc_496) (mutual-exclusive cisc_498 cisc_499) 
-        (mutual-exclusive cisc_498 cisc_500) (mutual-exclusive cisc_498 cogs_499)
-        (mutual-exclusive cisc_499 cisc_498) (mutual-exclusive cisc_499 cisc_496) 
-        (mutual-exclusive cisc_499 cisc_500) (mutual-exclusive cisc_499 cogs_499)
-        (mutual-exclusive cisc_500 cisc_498) (mutual-exclusive cisc_500 cisc_496) 
-        (mutual-exclusive cisc_500 cisc_499) (mutual-exclusive cisc_500 cogs_499)
-        (mutual-exclusive cogs_499 cisc_498) (mutual-exclusive cogs_499 cisc_496) 
-        (mutual-exclusive cogs_499 cisc_499) (mutual-exclusive cogs_499 cisc_500)
-        (mutual-exclusive math_110 math_111) (mutual-exclusive math_110 math_112)
-        (mutual-exclusive math_111 math_110) (mutual-exclusive math_111 math_112)
-        (mutual-exclusive math_112 math_110) (mutual-exclusive math_112 math_111)
-        (mutual-exclusive math_120 math_121) (mutual-exclusive math_120 math_126)
-        (mutual-exclusive math_121 math_126) (mutual-exclusive math_121 math_120)
-        (mutual-exclusive math_126 math_121) (mutual-exclusive math_126 math_120)
+        (capstone-course cisc_500)
+        (capstone-course cisc_499)
+        (capstone-course cisc_498)
+        (capstone-course cisc_496)
+        (capstone-course cogs_499)
+        ; (mutual-exclusive cisc_101 cisc_110) (mutual-exclusive cisc_101 cisc_151) 
+        ; (mutual-exclusive cisc_110 cisc_101) (mutual-exclusive cisc_110 cisc_151) 
+        ; (mutual-exclusive cisc_151 cisc_101) (mutual-exclusive cisc_151 cisc_110)
+        ; (mutual-exclusive cisc_320 cisc_322) (mutual-exclusive cisc_322 cisc_320)  
+        ; (mutual-exclusive cisc_320 cisc_326) (mutual-exclusive cisc_326 cisc_320) 
+        ; (mutual-exclusive cisc_322 cisc_326) (mutual-exclusive cisc_326 cisc_322) 
+        ; (mutual-exclusive cisc_351 cisc_371) (mutual-exclusive cisc_351 cisc_372) 
+        ; (mutual-exclusive cisc_371 cisc_351) (mutual-exclusive cisc_371 cisc_372) 
+        ; (mutual-exclusive cisc_372 cisc_351) (mutual-exclusive cisc_372 cisc_371) 
+        ; (mutual-exclusive cisc_452 cogs_400) (mutual-exclusive cogs_400 cisc_452)
+        ; (mutual-exclusive cisc_474 cisc_490) (mutual-exclusive cisc_490 cisc_474)
+        ; (mutual-exclusive cisc_496 cisc_498) (mutual-exclusive cisc_496 cisc_499) 
+        ; (mutual-exclusive cisc_498 cisc_496) (mutual-exclusive cisc_498 cisc_499) 
+        ; (mutual-exclusive cisc_498 cisc_500) (mutual-exclusive cisc_498 cogs_499)
+        ; (mutual-exclusive cisc_499 cisc_498) (mutual-exclusive cisc_499 cisc_496) 
+        ; (mutual-exclusive cisc_499 cisc_500) (mutual-exclusive cisc_499 cogs_499)
+        ; (mutual-exclusive cisc_500 cisc_498) (mutual-exclusive cisc_500 cisc_496) 
+        ; (mutual-exclusive cisc_500 cisc_499) (mutual-exclusive cisc_500 cogs_499)
+        ; (mutual-exclusive cogs_499 cisc_498) (mutual-exclusive cogs_499 cisc_496) 
+        ; (mutual-exclusive cogs_499 cisc_499) (mutual-exclusive cogs_499 cisc_500)
+        ; (mutual-exclusive math_110 math_111) (mutual-exclusive math_110 math_112)
+        ; (mutual-exclusive math_111 math_110) (mutual-exclusive math_111 math_112)
+        ; (mutual-exclusive math_112 math_110) (mutual-exclusive math_112 math_111)
+        ; (mutual-exclusive math_120 math_121) (mutual-exclusive math_120 math_126)
+        ; (mutual-exclusive math_121 math_126) (mutual-exclusive math_121 math_120)
+        ; (mutual-exclusive math_126 math_121) (mutual-exclusive math_126 math_120)
 
         (next year_1_fall year_1_winter)    (next year_1_winter year_1_summer)  (next year_1_summer year_2_fall)
         (next year_2_fall year_2_winter)    (next year_2_winter year_2_summer)  (next year_2_summer year_3_fall)
@@ -140,7 +144,14 @@
         (AI-core-F cisc_497)
         (AI-core-G cisc_496 cisc_499 cisc_500)
         (AI-option-A cogs_100 cogs_201 cisc_352)
-        (AI-option-B cisc_452 cisc_453 cisc_455 cisc_467 cisc_473 cisc_474)
+        
+        (AI-option-B cisc_452) 
+        (AI-option-B cisc_453) 
+        (AI-option-B cisc_455) 
+        (AI-option-B cisc_467) 
+        (AI-option-B cisc_473)
+        (AI-option-B cisc_474)
+
         (AI-supporting-A cisc_102 math_111 math_112 math_110)
         (AI-supporting-B math_120 math_121 math_123 math_124)
 

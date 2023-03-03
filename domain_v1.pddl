@@ -8,6 +8,8 @@
         cisc cogs stat math elec psyc  - course 
     )
     (:constants 
+        ; numbers：represent number of terms
+        n1 n2 n3 n4 n5 n6 n7 n8 - num1 
         ; numbers：represent number of courses
         s0 s1 s2 s3 s4 s5 - num2        
     )
@@ -39,9 +41,13 @@
         (AI-core-F ?c1 - course)
         (AI-core-G ?c1 ?c2 ?c3 - course)
         (AI-option-A ?c1 ?c2 ?c3 - course)
-        (AI-option-B ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 - course)
+        (AI-option-B ?c - course)
+        (AI-option_1 ?c - course)
+        (AI-option_2 ?c - course)
         (AI-supporting-A ?c1 ?c2 ?c3 ?c4 - course)
         (AI-supporting-B ?c1 ?c2 ?c3 ?c4 - course)
+        (capstone-course ?c - course)
+        (capstone-taken)
     )
     
     (:action add_course_without_prerequisites ; v1 complete
@@ -65,6 +71,7 @@
             (not (exists (?cx1 ?cx2 - course) (double-prerequisites ?cx1 ?cx2 ?c)))
             (not (exists (?cx1 ?cx2 ?cx3 - course) (triple-prerequisites ?cx1 ?cx2 ?cx3 ?c)))
             (not (exists (?cx1 ?cx2 ?cx3 ?cx4 - course) (quad-prerequisites ?cx1 ?cx2 ?cx3 ?cx4 ?c)))
+            (not (capstone-course ?c))
             
         )
         :effect 
@@ -89,7 +96,7 @@
             (not (taking ?c2)) ; the added course has not been taking in the current term
             (taken ?c1) ; the prerequisites has been taken at some term (nextline eliminates the current term)
             (not (taking ?c1)) ; can not take the course and its prerequisites in the same term
- 
+            (not (capstone-course ?c2))
         )       
         :effect (and
             (taking ?c2)
@@ -114,6 +121,7 @@
             (taken ?c2) ; the prerequisites has been taken at some term (nextline eliminates the current term)
             (not (taking ?c1)) ; can not take the course and its prerequisites in the same term
             (not (taking ?c2))
+            (not (capstone-course ?c3))
         )       
         :effect (and
             (taking ?c3)
@@ -139,6 +147,7 @@
             (not (taking ?c1)) ; can not take the course and its prerequisites in the same term
             (not (taking ?c2))
             (not (taking ?c3))
+            (not (capstone-course ?c4))            
         )       
         :effect (and
             (taking ?c4)
@@ -166,9 +175,154 @@
             (not (taking ?c2))
             (not (taking ?c3))
             (not (taking ?c4))
+            (not (capstone-course ?c5))
         )       
         :effect (and
             (taking ?c5)
+            (not (course-counts ?n ?s1))
+            (course-counts ?n ?s2)
+        )
+    )
+
+    (:action add_capstone_course_without_prerequisites ; v1 complete
+        :parameters 
+        (
+            ?c - course
+            ?t - term
+            ?n - num1
+            ?s1 ?s2 - num2
+        )
+        :precondition 
+        (and
+            (current-term ?t)
+            (current ?n)
+            (succ2 ?s1 ?s2)
+            (course-counts ?n ?s1)
+
+            (not (taken ?c)) ; the added course has not been taken in any terms
+            (not (taking ?c)) ; the added course has not been taking in the current term
+            (not (exists (?cx - course) (prerequisites ?cx ?c))) ; the course does not reuqire any prerequisites
+            (not (exists (?cx1 ?cx2 - course) (double-prerequisites ?cx1 ?cx2 ?c)))
+            (not (exists (?cx1 ?cx2 ?cx3 - course) (triple-prerequisites ?cx1 ?cx2 ?cx3 ?c)))
+            (not (exists (?cx1 ?cx2 ?cx3 ?cx4 - course) (quad-prerequisites ?cx1 ?cx2 ?cx3 ?cx4 ?c)))
+            (capstone-course ?c)
+            (not (capstone-taken))
+            (or 
+                (course-counts n3 ?s1)
+                (course-counts n4 ?s1)
+                (course-counts n5 ?s1)
+                (course-counts n6 ?s1)
+                (course-counts n7 ?s1)
+                (course-counts n8 ?s1)
+            )     
+        )
+        :effect 
+        (and 
+            (taking ?c)
+            (capstone-taken)
+            (not (course-counts ?n ?s1))
+            (course-counts ?n ?s2)
+        )
+    )
+
+    (:action add_capstone_course_with_prerequisites
+        :parameters (?c1 ?c2 - course ?t - term ?s1 ?s2 - num2 ?n - num1)
+        :precondition 
+        (and 
+            (current-term ?t)
+            (current ?n)
+            (succ2 ?s1 ?s2)
+            (course-counts ?n ?s1)
+
+            (prerequisites ?c1 ?c2)
+            (not (taken ?c2)) ; the added course has not been taken in any terms
+            (not (taking ?c2)) ; the added course has not been taking in the current term
+            (taken ?c1) ; the prerequisites has been taken at some term (nextline eliminates the current term)
+            (not (taking ?c1)) ; can not take the course and its prerequisites in the same term
+            (capstone-course ?c2)
+            (not (capstone-taken))
+            (or 
+                (course-counts n3 ?s1)
+                (course-counts n4 ?s1)
+                (course-counts n5 ?s1)
+                (course-counts n6 ?s1)
+                (course-counts n7 ?s1)
+                (course-counts n8 ?s1)
+            )
+        )       
+        :effect (and
+            (taking ?c2)
+            (capstone-taken)
+            (not (course-counts ?n ?s1))
+            (course-counts ?n ?s2)
+        )
+    )
+    
+    (:action add_capstone_course_with_double_prerequisites
+        :parameters (?c1 ?c2 ?c3 - course ?t - term ?s1 ?s2 - num2 ?n - num1)
+        :precondition 
+        (and 
+            (current-term ?t)
+            (current ?n)
+            (succ2 ?s1 ?s2)
+            (course-counts ?n ?s1)
+            (double-prerequisites ?c1 ?c2 ?c3)
+            (not (taken ?c3)) ; the added course has not been taken in any terms
+            (not (taking ?c3)) ; the added course has not been taking in the current term
+            (taken ?c1)
+            (taken ?c2) ; the prerequisites has been taken at some term (nextline eliminates the current term)
+            (not (taking ?c1)) ; can not take the course and its prerequisites in the same term
+            (not (taking ?c2))
+            (capstone-course ?c3)
+            (not (capstone-taken))
+            (or 
+                (course-counts n3 ?s1)
+                (course-counts n4 ?s1)
+                (course-counts n5 ?s1)
+                (course-counts n6 ?s1)
+                (course-counts n7 ?s1)
+                (course-counts n8 ?s1)
+            )
+        )       
+        :effect (and
+            (taking ?c3)
+            (capstone-taken)
+            (not (course-counts ?n ?s1))
+            (course-counts ?n ?s2)
+        )
+    )
+
+    (:action add_capstone_course_with_triple_prerequisites
+        :parameters (?c1 ?c2 ?c3 ?c4 - course ?t - term ?s1 ?s2 - num2 ?n - num1)
+        :precondition 
+        (and 
+            (current-term ?t)
+            (current ?n)
+            (succ2 ?s1 ?s2)
+            (course-counts ?n ?s1)
+            (triple-prerequisites ?c1 ?c2 ?c3 ?c4)
+            (not (taken ?c4)) ; the added course has not been taken in any terms
+            (not (taking ?c4)) ; the added course has not been taking in the current term
+            (taken ?c1) ; the prerequisites has been taken at some term (nextline eliminates the current term)
+            (taken ?c2)
+            (taken ?c3) 
+            (not (taking ?c1)) ; can not take the course and its prerequisites in the same term
+            (not (taking ?c2))
+            (not (taking ?c3))
+            (capstone-course ?c4) 
+            (not (capstone-taken))
+            (or 
+                (course-counts n3 ?s1)
+                (course-counts n4 ?s1)
+                (course-counts n5 ?s1)
+                (course-counts n6 ?s1)
+                (course-counts n7 ?s1)
+                (course-counts n8 ?s1)
+            )           
+        )       
+        :effect (and
+            (taking ?c4)
+            (capstone-taken)
             (not (course-counts ?n ?s1))
             (course-counts ?n ?s2)
         )
@@ -255,33 +409,64 @@
             (complete-AI-core)
         )
     )
+
+    (:action check_AI_option_B_first
+        :parameters 
+        (
+            ?c - course
+        )
+        :precondition 
+        (and 
+            (AI-option-B ?c)
+            (taken ?c)
+            (not (exists (?cx - course) (AI-option_1 ?cx)))
+            (not (AI-option_2 ?c))
+        )
+        :effect 
+        (and 
+            (AI-option_1 ?c)
+        )
+    )
+
+    (:action check_AI_option_B_second
+        :parameters 
+        (
+            ?c - course
+        )
+        :precondition 
+        (and 
+            (AI-option-B ?c)
+            (taken ?c)
+            (not (exists (?cx - course) (AI-option_2 ?cx)))
+            (not (AI-option_1 ?c))
+        )
+        :effect 
+        (and 
+            (AI-option_2 ?c)
+        )
+    )
+    
     (:action check_AI_option
         :parameters 
         (
             ?c1 ?c2 ?c3 - course
-            ?c4 ?c5 ?c6 ?c7 ?c8 ?c9 - course
+            ?c4 ?c5 - course
         )
         :precondition 
         (and 
             (AI-option-A ?c1 ?c2 ?c3)
-            (AI-option-B ?c4 ?c5 ?c6 ?c7 ?c8 ?c9)
             (taken ?c1)
             (taken ?c2)
             (taken ?c3)
-            (or
-                (taken ?c4)
-                (taken ?c5)
-                (taken ?c6)
-                (taken ?c7)
-                (taken ?c8)
-                (taken ?c9)
-            )
+            (AI-option_1 ?c4)
+            (AI-option_2 ?c5)
         )
         :effect 
         (and 
             (complete-AI-option)
         )
     )
+
     (:action check_AI_supporting
         :parameters 
         (
@@ -318,23 +503,17 @@
         )
     )
     (:action check_AI_complete
-        :parameters 
-        (
-            ?c1 ?c2 ?c3 ?c4 - course
-            ?c5 ?c6 ?c7 ?c8 - course
-        )
+        :parameters ()
         :precondition 
         (and 
             (complete-AI-core)
             (complete-AI-option)
-            (complete-AI-supporting) 
+            (complete-AI-supporting)
+            (capstone-taken)
         )
         :effect 
         (and 
             (complete-AI-stream)
         )
-    )
-    
-        
-    
+    )   
 )
