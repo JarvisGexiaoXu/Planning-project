@@ -3,7 +3,7 @@
 ## Project Draft Report
 By March 3rd, we have completed the fundamental cp model (version 1). The created model is capable of generating reasonable plans for the AI stream. <br />
 Under 'Issues' of this repository, we have a list of closed issues; it describes the fundamental features and constraints of the created model, and represents the challenges we have faced so far in building it. <br />
-We are going to start working on the FOND model (version 2). It is expected to be done by March 12th. <br />
+We are going to start working on the FOND model (version 2). It is expected to be done by March 19th. <br />
 After that, if time permits, we will add time notions to the model (version 3). <br />
 At this moment, we feel confident to submit a completed project before the deadline. <br />
 
