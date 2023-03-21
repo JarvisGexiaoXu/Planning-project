@@ -63,3 +63,9 @@ check_ai_option cogs_100 cogs_201 cisc_352 cisc_474 cisc_467 (1) <br />
 check_ai_supporting cisc_102 math_111 math_112 math_110 math_120 math_121 math_123 math_124 (1) <br />
 check_ai_complete  (1) <br />
 
+## Version 2:
+Added feature: a non-deterministic feature, the mutual exclusive courses are offered in every two terms.
+Validation failed, searching for the complete goal exceeds the time limit.
+Can get solution for simpler sub-problem for example the path to a specific course.
+
+TODO: will make a simplified version of version 2.
