@@ -44,6 +44,7 @@
         (available-mutual ?c - course ?n - num1)
         (unavailable-mutual ?c - course ?n - num1)
         (mutual-exclusive ?c1 - course)
+        (end-undergrad)
 
     )
     
@@ -255,7 +256,7 @@
     ; )
   
     (:action next_term ; term transition
-        :parameters ( ?n1 ?n2 - num1 ?s - num2)
+        :parameters ( ?n1 ?n2 - num1)
         :precondition 
         (and 
             (course-counts ?n1 s5)
@@ -270,6 +271,30 @@
             (not (current ?n1))
             (current ?n2)
 
+            (forall (?cx - course) ; mark all the taking course to be taken
+                (and
+                    (when 
+                        (taking ?cx) 
+                        (and
+                            (not (taking ?cx))
+                            (taken ?cx)    
+                        )
+                    )     
+                )
+            )
+        )
+    )
+    (:action end_term ; term transition
+        :parameters ()
+        :precondition 
+        (and 
+            (course-counts n8 s5)
+            (current n8)
+        )
+        :effect 
+        (and 
+            (end-undergrad)
+            ; (not (course-counts ?n1 ?s))
             (forall (?cx - course) ; mark all the taking course to be taken
                 (and
                     (when 
@@ -458,6 +483,7 @@
             (complete-AI-supporting)
             (capstone-taken)
             (course-counts n8 s5)
+            (end-undergrad)
         )
         :effect 
         (and 
